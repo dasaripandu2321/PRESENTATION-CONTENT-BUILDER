@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+
+# Environment Variables
+.env
+
+# Pytest / Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# ChromaDB & Vector Store data
+data/chroma_db/
+data/uploads/
+data/*.pptx
+
+# IDE & OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

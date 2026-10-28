@@ -1,0 +1,43 @@
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0c1017;
+}
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
+
+/* Nav Tab Active State */
+.nav-tab.active {
+  background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+}
+
+/* Slide Stage Transitions */
+#slide-stage {
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Slide Thumbnail Active Ring */
+.thumb-card.active {
+  border-color: #6366f1;
+  background-color: #161f30;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.4);
+}
+
+/* Editable focus effects */
+[contenteditable="true"]:focus {
+  background-color: rgba(99, 102, 241, 0.08);
+  border-radius: 4px;
+  padding: 2px 4px;
+}
+

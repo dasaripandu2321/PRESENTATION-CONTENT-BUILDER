@@ -1,0 +1,32 @@
+# MULTI-AGENT AI SYSTEM DESIGN FOR PRESENTATION CONTENT SYNTHESIS
+Author: Antigravity Agent Engineering Team
+Technical Note: AN-2026-09
+
+## 1. MULTI-AGENT COORDINATION MODEL
+In modern generative workflows, a single monolithic prompt cannot handle document ingestion, multi-hop vector retrieval, schema enforcement, and PowerPoint presentation design simultaneously.
+The presentation synthesis pipeline delegates responsibilities across specialized agent subsystems:
+
+1. Ingestion & Chunking Agent:
+   - Validates document encoding and structure (PDF, DOCX, Markdown).
+   - Segregates tables, headers, and body text.
+   - Computes recursive chunk boundaries with contextual overlaps.
+
+2. Semantic Vector & Retrieval Agent:
+   - Queries ChromaDB collections using dense vector similarity.
+   - Executes multi-aspect query reformulation to gather context from all key sections of the topic.
+   - Scores and ranks retrieved passages, discarding duplicate or low-relevance snippets.
+
+3. Deck Architect & Structured Synthesis Agent:
+   - Translates raw unstructured knowledge chunks into a strictly valid SlideDeck JSON schema.
+   - Writes action-oriented titles, high-density bullet points, clear core takeaways, and visual layout suggestions.
+   - Generates natural, comprehensive speaker notes for the presenter.
+
+4. Layout & PPTX Rendering Agent:
+   - Maps JSON schema layout suggestions (title_hero, split_2_column, 3_pillar_cards, kpi_highlight, timeline_flow, bullet_list) into native PowerPoint shapes, text boxes, and palettes.
+   - Enforces widescreen 16:9 aspect ratio, typography hierarchy, and corporate color palettes.
+
+## 2. CITATION INTEGRITY & FACTUAL BOUNDING
+- Every slide must cite its source documents and page numbers.
+- Hallucination prevention: The Deck Architect agent is constrained to only synthesize claims present within retrieved knowledge chunks.
+- Audit trail: Users can trace any bullet point or takeaway back to the underlying chunk ID in the ChromaDB vector store.
+
