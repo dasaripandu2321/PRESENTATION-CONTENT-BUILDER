@@ -44,8 +44,18 @@ app.add_middleware(
 
 # Mount static web UI files
 static_dir = Path(__file__).resolve().parent / "static"
-static_dir.mkdir(parents=True, exist_ok=True)
-app.mount("/static", StaticFiles(directory=str(static_dir)), name="static")
+if not static_dir.exists():
+    fallback_static = Path(__file__).resolve().parent.parent / "app" / "static"
+    if fallback_static.exists():
+        static_dir = fallback_static
+
+try:
+    static_dir.mkdir(parents=True, exist_ok=True)
+except Exception:
+    pass
+
+if static_dir.exists():
+    app.mount("/static", StaticFiles(directory=str(static_dir)), name="static")
 
 
 @app.get("/", response_class=HTMLResponse)

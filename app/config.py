@@ -6,13 +6,24 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 os.environ["ANONYMIZED_TELEMETRY"] = "False"
 os.environ["CHROMA_SERVER_NOOP_TELEMETRY"] = "True"
 
+IS_VERCEL = bool(os.getenv("VERCEL"))
+
 BASE_DIR = Path(__file__).resolve().parent.parent
-DATA_DIR = BASE_DIR / "data"
+
+# On Vercel / serverless environments, root is read-only; use /tmp for dynamic storage
+if IS_VERCEL:
+    DATA_DIR = Path("/tmp/data")
+else:
+    DATA_DIR = BASE_DIR / "data"
+
 UPLOAD_DIR = DATA_DIR / "uploads"
 CHROMA_DIR = DATA_DIR / "chroma_db"
 
-UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
-CHROMA_DIR.mkdir(parents=True, exist_ok=True)
+try:
+    UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+    CHROMA_DIR.mkdir(parents=True, exist_ok=True)
+except Exception as e:
+    print(f"Notice: Storage directory creation deferred: {e}")
 
 
 class Settings(BaseSettings):
@@ -23,6 +34,7 @@ class Settings(BaseSettings):
     DEBUG: bool = True
     HOST: str = "127.0.0.1"
     PORT: int = 8000
+    IS_VERCEL: bool = IS_VERCEL
 
     # Storage paths
     UPLOAD_DIRECTORY: str = str(UPLOAD_DIR)
@@ -33,7 +45,7 @@ class Settings(BaseSettings):
     DEFAULT_CHUNK_OVERLAP: int = 150
 
     # Embedding configurations
-    EMBEDDING_PROVIDER: str = "local"  # 'local', 'openai', or 'fast_fallback'
+    EMBEDDING_PROVIDER: str = "auto"  # 'auto', 'local', 'openai', or 'fast_fallback'
     EMBEDDING_MODEL_NAME: str = "all-MiniLM-L6-v2"
     OPENAI_EMBEDDING_MODEL: str = "text-embedding-3-small"
 
